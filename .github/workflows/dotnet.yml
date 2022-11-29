@@ -43,7 +43,7 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"ManassehV2_MedTracker-G1" /o:"manassehv2" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-            dotnet build
+
             /d:sonar.login="<sonar-token>"
             /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
             dotnet build --no-incremental
