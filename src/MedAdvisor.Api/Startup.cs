@@ -17,7 +17,6 @@ namespace MedAdvisor.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureAuthentication(services);
             services.AddCors(corsOptions =>
             {
                 string[] origins = Configuration.GetSection("CorsOrgins").Get<string[]>();
@@ -42,7 +41,6 @@ namespace MedAdvisor.Api
             services.Configure<ApiBehaviorOptions>(options =>
                 options.SuppressInferBindingSourcesForParameters = true);
 
-            AddValidators(services);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("1.0", new OpenApiInfo
@@ -100,16 +98,6 @@ namespace MedAdvisor.Api
             {
                 c.SwaggerEndpoint("/swagger/1.0/swagger.json", "Wmc.MobileClient.Api v1");
             });
-        }
-
-        private static void AddValidators(IServiceCollection services)
-        {
-
-        }
-
-        private void ConfigureAuthentication(IServiceCollection services)
-        {
-
         }
     }
 }
