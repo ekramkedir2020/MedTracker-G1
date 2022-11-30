@@ -4,31 +4,34 @@ using MedAdvisor.Api;
 using MedAdvisor.API.Test.Infrastructure;
 using FluentAssertions;
 using System.Net;
-public class WeatherForecastControllerTests : IClassFixture<TestWebApplicationFactory<Startup>>
+namespace MedAdvisor.API.Test.ControllerTests
 {
-    private readonly TestWebApplicationFactory<Startup> _factory;
-    private readonly HttpClient _client;
-    private readonly IServiceProvider _serviceProvider;
-    public WeatherForecastControllerTests(TestWebApplicationFactory<Startup> factory)
+    public class WeatherForecastControllerTests : IClassFixture<TestWebApplicationFactory<Startup>>
     {
-        _factory = factory;
-        _client = factory.CreateClient();
-        _serviceProvider = factory.Services;
+        private readonly TestWebApplicationFactory<Startup> _factory;
+        private readonly HttpClient _client;
+        private readonly IServiceProvider _serviceProvider;
+        public WeatherForecastControllerTests(TestWebApplicationFactory<Startup> factory)
+        {
+            _factory = factory;
+            _client = factory.CreateClient();
+            _serviceProvider = factory.Services;
+
+        }
+
+
+        [Fact]
+        public async Task WeatherForecastController_WeatherForecast_Get()
+        {
+            var (httpStatusResponse, httpResponseBody) = await _client.ExecuteWithFullResultAsync<IEnumerable<WeatherForecast>>(
+                HttpMethod.Get,
+                $"/WeatherForecast",
+                string.Empty
+
+            );
+            Assert.Equal(HttpStatusCode.OK, httpStatusResponse);
+            httpResponseBody.Should().NotBeEmpty().And.HaveCount(5);
+        }
 
     }
-
-
-    [Fact]
-    public async Task WeatherForecastController_WeatherForecast_Get()
-    {
-        var (httpStatusResponse, httpResponseBody) = await _client.ExecuteWithFullResultAsync<IEnumerable<WeatherForecast>>(
-            HttpMethod.Get,
-            $"/WeatherForecast",
-            string.Empty
-
-        );
-        Assert.Equal(HttpStatusCode.OK, httpStatusResponse);
-        httpResponseBody.Should().NotBeEmpty().And.HaveCount(5);
-    }
-
 }
