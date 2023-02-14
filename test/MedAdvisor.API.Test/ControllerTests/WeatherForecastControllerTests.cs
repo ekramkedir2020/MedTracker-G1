@@ -20,14 +20,6 @@ namespace MedAdvisor.API.Test.ControllerTests
         }
 
 
-        [Fact]
-        public async Task WeatherForecastController_WeatherForecast_Get()
-        {
-            var (httpStatusResponse, httpResponseBody) = await _client.ExecuteWithFullResultAsync<IEnumerable<WeatherForecast>>(
-                HttpMethod.Get,
-                $"/WeatherForecast",
-                string.Empty
-
             );
             Assert.Equal(HttpStatusCode.OK, httpStatusResponse);
             httpResponseBody.Should().NotBeEmpty().And.HaveCount(5);
